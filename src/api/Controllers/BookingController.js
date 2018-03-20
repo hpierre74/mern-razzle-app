@@ -1,51 +1,29 @@
 import Booking from "../Models/Booking";
 import cuid from "cuid";
+//import Restaurant from "../Models/Restaurant";
 
 class BookingController {
   static getBookings(req, res) {
-    Booking.find()
-      .sort("date")
-      .exec((err, bookings) => {
-        if (err) {
-          res.status(500).send(err);
-        }
-        res.json({ bookings });
-      });
+    Booking.forRestaurant(req.params.restaurantId, (err, bookings) => {
+      err ? res.status(404).send() : res.json(Booking.byRestaurant(req.params.restaurantId))
+    })
   }
   static getBooking(req, res) {
-    Booking.findOne({ cuid: req.params.cuid }).exec((err, booking) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-      res.json({ booking });
+    Booking.findOne({ _id: req.params.bookingId }).exec((err, booking) => {
+      err ? res.status(500).send(err): res.json({ booking });
     });
   }
 
   static addBooking(req, res) {
-    if (
-      !req.body.firstname ||
-      !req.body.lastname ||
-      !req.body.tel ||
-      !req.body.email ||
-      !req.body.time ||
-      !req.body.date ||
-      !req.body.service ||
-      !req.body.persons
-    ) {
-      res.status(403).end();
-    }
-    const newBooking = new Booking(req.body);
+    let newBooking = new Booking(req.body);
     newBooking.cuid = cuid();
-    newBooking.save((err, saved) => {
-      if (err) {
-        res.status(500).send(err);
-      }
-      res.json({ booking: saved });
-    });
+    Booking.create(newBooking,(err, booking) => {
+      err? res.status(500).send(err) : res.json({booking})
+    })
   }
 
   static deleteBooking(req, res) {
-    Booking.findOne({ cuid: req.params.cuid }).exec((err, booking) => {
+    Booking.findOne({ _id: req.params.bookingId }).exec((err, booking) => {
         if (err) {
           res.status(500).send(err);
         }  

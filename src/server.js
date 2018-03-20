@@ -5,7 +5,10 @@ import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
 import express from 'express';
 import mongoose from 'mongoose';
+import RestaurantRouter from './api/Routes/RestaurantRoutes';
 import BookingRouter from './api/Routes/BookingRoutes';
+import ProductRouter from './api/Routes/ProductRoutes';
+import ShoppingRouter from './api/Routes/ShoppingRoutes';
 import cors from 'cors';
 import bodyParser from 'body-parser';
 import serverConfig from './config';
@@ -32,7 +35,10 @@ server
   .use(cors({ origin: true }))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({extended: true}))
+  .use('/api', ShoppingRouter)
+  .use('/api', ProductRouter)
   .use('/api', BookingRouter)
+  .use('/api', RestaurantRouter)
   .get('/*', (req, res) => {
     const context = {};
     const markup = renderToString(
