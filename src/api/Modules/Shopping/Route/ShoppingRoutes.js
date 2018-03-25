@@ -1,5 +1,5 @@
 import Router from 'express';
-import ShoppingController from '../Controllers/ShoppingController';
+import ShoppingController from '../Controller/ShoppingController';
 const ShoppingRouter = new Router();
 
 // Get all Shops

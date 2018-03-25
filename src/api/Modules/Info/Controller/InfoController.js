@@ -1,4 +1,4 @@
-import Info from "../Models/Info";
+import Info from "../Model/Info";
 import cuid from "cuid";
 
 class InfoController {

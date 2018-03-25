@@ -1,5 +1,5 @@
 import Router from 'express';
-import BookingController from '../Controllers/BookingController';
+import BookingController from '../Controller/BookingController';
 const BookingRouter = new Router();
 
 // Get all Bookings

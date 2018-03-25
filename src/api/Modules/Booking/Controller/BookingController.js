@@ -1,6 +1,6 @@
-import Booking from "../Models/Booking";
+import Booking from "../Model/Booking";
 import cuid from "cuid";
-//import Restaurant from "../Models/Restaurant";
+//import Restaurant from "../Model/Restaurant";
 
 class BookingController {
   static getBookings(req, res) {

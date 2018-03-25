@@ -1,4 +1,4 @@
-import Service from "../Models/Service";
+import Service from "../Model/Service";
 //import cuid from "cuid";
 
 class ServiceController {

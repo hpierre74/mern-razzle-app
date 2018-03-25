@@ -1,6 +1,6 @@
 import Router from 'express';
-import RestaurantController from '../Controllers/RestaurantController';
-import ServiceRouter from './ServiceRoutes';
+import RestaurantController from '../Controller/RestaurantController';
+import ServiceRouter from '../../Service/Route/ServiceRoutes';
 const RestaurantRouter = new Router();
 
 

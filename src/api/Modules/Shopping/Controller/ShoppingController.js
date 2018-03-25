@@ -1,4 +1,4 @@
-import Shopping from "../Models/Shopping";
+import Shopping from "../Model/Shopping";
 import cuid from "cuid";
 
 class ShoppingController {

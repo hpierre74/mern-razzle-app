@@ -1,4 +1,4 @@
-import Product from "../Models/Product";
+import Product from "../Model/Product";
 import cuid from "cuid";
 
 class ProductController {

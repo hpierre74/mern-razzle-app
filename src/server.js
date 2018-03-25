@@ -1,17 +1,22 @@
-import 'bootstrap/dist/css/bootstrap.css';
+//React SSR
 import App from './App';
 import React from 'react';
 import { StaticRouter } from 'react-router-dom';
 import { renderToString } from 'react-dom/server';
+// Express Server
 import express from 'express';
+//import config from './api/config/config';
+import Router from './api/config/Router';
+import AuthRouter from './api/Modules/Auth/Route/AuthRoutes';
+import passport from 'passport';
+// import expressJwt from 'express-jwt';
 import mongoose from 'mongoose';
-import RestaurantRouter from './api/Routes/RestaurantRoutes';
-import BookingRouter from './api/Routes/BookingRoutes';
-import ProductRouter from './api/Routes/ProductRoutes';
-import ShoppingRouter from './api/Routes/ShoppingRoutes';
 import cors from 'cors';
 import bodyParser from 'body-parser';
+import cookieParser from 'cookie-parser';
 import serverConfig from './config';
+import './api/Services/passport';
+import UserRouter from'./api/Modules/User/Route/UserRoutes';
 
 // Set native promises as mongoose promise
 mongoose.Promise = global.Promise;
@@ -24,6 +29,8 @@ mongoose.connect(serverConfig.mongoURL, (error) => {
   }
 });
 
+
+
 //Express App setup
 
 const assets = require(process.env.RAZZLE_ASSETS_MANIFEST);
@@ -35,10 +42,12 @@ server
   .use(cors({ origin: true }))
   .use(bodyParser.json())
   .use(bodyParser.urlencoded({extended: true}))
-  .use('/api', ShoppingRouter)
-  .use('/api', ProductRouter)
-  .use('/api', BookingRouter)
-  .use('/api', RestaurantRouter)
+  .use(cookieParser())
+  .use('/', AuthRouter)
+  .use('/', UserRouter)
+  .use(passport.initialize())
+  .use(passport.session())
+  .use('/api', Router)
   .get('/*', (req, res) => {
     const context = {};
     const markup = renderToString(
@@ -56,7 +65,7 @@ server
     <head>
         <meta http-equiv="X-UA-Compatible" content="IE=edge" />
         <meta charset="utf-8" />
-        <title>Pierre Huyghe</title>
+        <title>RestaurantManager</title>
         <meta name="viewport" content="width=device-width, initial-scale=1">
         ${assets.client.css
           ? `<link rel="stylesheet" href="${assets.client.css}">`

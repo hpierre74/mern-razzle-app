@@ -1,4 +1,4 @@
-import Restaurant from "../Models/Restaurant";
+import Restaurant from "../Model/Restaurant";
 import cuid from "cuid";
 
 class RestaurantController {

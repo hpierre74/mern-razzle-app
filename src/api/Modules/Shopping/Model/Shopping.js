@@ -10,6 +10,7 @@ export const shoppingSchema = new Schema({
     quantity: { type: Number, required: true },
     restaurantId: { type: String, required: true },
     pending: { type: Boolean, default: true, required: true },
+    isUrgent: { type: Boolean, default:false, required: true},
     createdAt: { type: Date, default: Date.now, required: true }
 })
 
